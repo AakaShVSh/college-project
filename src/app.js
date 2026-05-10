@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());   // must come before routes
 
 app.use(cors({
-  origin: "http://localhost:5173", // your Vite frontend
+  origin: "https://college-project-4t4q.onrender.com", // your Vite frontend
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
