@@ -13,7 +13,7 @@ const {
   deleteComment,
   getMyTasks,
   getTaskHistory,
-} = require("../controllers/taskController");
+} = require("../controllers/task.controller");
 
 // ── All routes require authentication ──────────────────────────────────────
 router.use(auth);
