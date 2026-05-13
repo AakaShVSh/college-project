@@ -60,7 +60,7 @@ const crypto  = require("crypto");
 const User    = require("../models/user.model");
 const { Session } = require("../models/auth.model");
 
-const JWT_SECRET = process.env.JWT_SECRET || "gi7gug9ug9o88iohoyyyyyyy89yuyuuyuuuuuy8676rrr6rr";
+const JWT_SECRET = process.env.JWT_SECRET || "gjashduyqw98wyhdsd89ywdiy9wy8adusd9y0jdoi0w9yuwid8qwyddiqwpe9";
 
 const hashToken = (raw) =>
   crypto.createHash("sha256").update(raw).digest("hex");
@@ -79,6 +79,8 @@ const authenticate = async (req, res, next) => {
 
     let payload;
     try {
+      console.log(raw,JWT_SECRET);
+      
       payload = jwt.verify(raw, JWT_SECRET);
     } catch {
       return res.status(401).json({ message: "Invalid or expired token" });
