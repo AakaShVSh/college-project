@@ -1,7 +1,6 @@
 const express      = require("express");
 const cors         = require("cors");
 const cookieParser = require("cookie-parser");
-const path = require("path");
 
 const app = express();
 
@@ -36,13 +35,6 @@ app.use("/api/subgroups",  require("./routes/subGroup.routes")); // ← was miss
 app.use("/api/messages",   require("./routes/message.routes"));
 app.use("/api/dm",         require("./routes/dm.routes"));       // ← was missing
 app.use("/api/users",      require("./routes/user.routes"));
-
-// ── Serve React build ─────────────────────────────────────────────────────────
-app.use(express.static(path.join(__dirname, "../client/dist")));
-
-app.get(/.*/, (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
-});
 
 // ── Health check ─────────────────────────────────────────────────────────────
 app.get("/api/health", (_req, res) => res.json({ status: "ok", time: new Date() }));
