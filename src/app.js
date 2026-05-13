@@ -31,7 +31,7 @@ app.use(cors({
 // ── Routes ───────────────────────────────────────────────────────────────────
 app.use("/api/auth",       require("./routes/auth.routes"));
 app.use("/api/channels",   require("./routes/channel.routes"));
-app.use("/api/subgroups",  require("./routes/subgroup.routes")); // ← was missing
+app.use("/api/subgroups",  require("./routes/subGroup.routes")); // ← was missing
 app.use("/api/messages",   require("./routes/message.routes"));
 app.use("/api/dm",         require("./routes/dm.routes"));       // ← was missing
 app.use("/api/users",      require("./routes/user.routes"));
