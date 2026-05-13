@@ -40,8 +40,7 @@ app.use("/api/users",      require("./routes/user.routes"));
 // ── Serve React build ─────────────────────────────────────────────────────────
 app.use(express.static(path.join(__dirname, "../client/dist")));
 
-// ── Catch-all: send index.html for any non-API route ─────────────────────────
-app.get("*", (req, res) => {
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
 });
 
