@@ -19,22 +19,23 @@ const ALLOWED_ORIGINS = [
 
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow server-to-server / Postman (no origin header)
     if (!origin) return callback(null, true);
     if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
     callback(new Error(`CORS: origin '${origin}' not allowed`));
   },
-  credentials: true,
+  credentials: true,            // required for cross-origin cookies
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
 // ── Routes ───────────────────────────────────────────────────────────────────
-app.use("/api/auth",       require("./routes/auth.routes"));
-app.use("/api/channels",   require("./routes/channel.routes"));
-app.use("/api/subgroups",  require("./routes/subGroup.routes")); // ← was missing
-app.use("/api/messages",   require("./routes/message.routes"));
-app.use("/api/dm",         require("./routes/dm.routes"));       // ← was missing
-app.use("/api/users",      require("./routes/user.routes"));
+app.use("/api/auth",      require("./routes/auth.routes"));
+app.use("/api/channels",  require("./routes/channel.routes"));
+app.use("/api/subgroups", require("./routes/subGroup.routes"));
+app.use("/api/messages",  require("./routes/message.routes"));
+app.use("/api/dm",        require("./routes/dm.routes"));
+app.use("/api/users",     require("./routes/user.routes"));
 
 // ── Health check ─────────────────────────────────────────────────────────────
 app.get("/api/health", (_req, res) => res.json({ status: "ok", time: new Date() }));
