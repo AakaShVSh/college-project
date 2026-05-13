@@ -17,9 +17,8 @@ const ALLOWED_ORIGINS = [
   "http://127.0.0.1:3000",
 ];
 
-const corsOptions = {
+app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no Origin header (Postman, curl, server-to-server)
     if (!origin) return callback(null, true);
     if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
     callback(new Error(`CORS: origin '${origin}' not allowed`));
@@ -27,19 +26,15 @@ const corsOptions = {
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-};
-
-// Apply CORS middleware globally — this also handles OPTIONS pre-flight
-// because the cors() middleware responds to OPTIONS automatically.
-// NOTE: Do NOT use app.options("*", ...) — the bare wildcard * is invalid
-// in Express 5 / path-to-regexp v8 and will crash the server at startup.
-app.use(cors(corsOptions));
+}));
 
 // ── Routes ───────────────────────────────────────────────────────────────────
-app.use("/api/auth",     require("./routes/auth.routes"));
-app.use("/api/channels", require("./routes/channel.routes"));
-app.use("/api/messages", require("./routes/message.routes"));
-app.use("/api/users",    require("./routes/user.routes"));
+app.use("/api/auth",       require("./routes/auth.routes"));
+app.use("/api/channels",   require("./routes/channel.routes"));
+app.use("/api/subgroups",  require("./routes/subgroup.routes")); // ← was missing
+app.use("/api/messages",   require("./routes/message.routes"));
+app.use("/api/dm",         require("./routes/dm.routes"));       // ← was missing
+app.use("/api/users",      require("./routes/user.routes"));
 
 // ── Health check ─────────────────────────────────────────────────────────────
 app.get("/api/health", (_req, res) => res.json({ status: "ok", time: new Date() }));
