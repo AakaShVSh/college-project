@@ -36,6 +36,7 @@ app.use("/api/subgroups", require("./routes/subGroup.routes"));
 app.use("/api/messages",  require("./routes/message.routes"));
 app.use("/api/dm",        require("./routes/dm.routes"));
 app.use("/api/users",     require("./routes/user.routes"));
+app.use("/api/tasks",     require("./routes/taskRoutes"));
 
 // ── Health check ─────────────────────────────────────────────────────────────
 app.get("/api/health", (_req, res) => res.json({ status: "ok", time: new Date() }));
