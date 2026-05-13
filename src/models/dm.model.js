@@ -118,4 +118,4 @@ messageSchema.index({ subgroupId: 1, createdAt: -1 });
 messageSchema.index({ dmId:       1, createdAt: -1 });
 messageSchema.index({ groupDmId:  1, createdAt: -1 });
 
-module.exports = mongoose.model("Message", messageSchema);
+module.exports = mongoose.model("dm", messageSchema);
