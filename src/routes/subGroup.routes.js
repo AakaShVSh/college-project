@@ -4,7 +4,7 @@ const { authenticate: protect } = require("../middlewares/protect");
 const {
   getSubgroup, createSubgroup, updateSubgroup, archiveSubgroup,
   getMembers, addMember, removeMember,
-} = require("../controllers/subgroup.controller");
+} = require("../controllers/subGroup.controller");
 
 router.use(protect);
 
