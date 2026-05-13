@@ -8,13 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-/* ── CORS ────────────────────────────────────────────────────────────────────
-   Allowed origins:
-     • Production frontend on Render
-     • Local Vite dev server (default port 5173)
-     • Local Vite on port 3000 (if you override the port)
-   Add more entries to ALLOWED_ORIGINS as needed.
-*/
+/* ── Allowed origins ─────────────────────────────────────────────────────── */
 const ALLOWED_ORIGINS = [
   "https://ctms-q2z1.onrender.com",
   "http://localhost:5173",
@@ -23,24 +17,23 @@ const ALLOWED_ORIGINS = [
   "http://127.0.0.1:3000",
 ];
 
-app.use(cors({
+const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, Postman, server-to-server)
+    // Allow requests with no Origin header (Postman, curl, server-to-server)
     if (!origin) return callback(null, true);
-
-    if (ALLOWED_ORIGINS.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error(`CORS: origin '${origin}' not allowed`));
-    }
+    if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS: origin '${origin}' not allowed`));
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-}));
+};
 
-// Explicitly handle pre-flight OPTIONS for all routes
-app.options("*", cors());
+// Apply CORS middleware globally — this also handles OPTIONS pre-flight
+// because the cors() middleware responds to OPTIONS automatically.
+// NOTE: Do NOT use app.options("*", ...) — the bare wildcard * is invalid
+// in Express 5 / path-to-regexp v8 and will crash the server at startup.
+app.use(cors(corsOptions));
 
 // ── Routes ───────────────────────────────────────────────────────────────────
 app.use("/api/auth",     require("./routes/auth.routes"));
