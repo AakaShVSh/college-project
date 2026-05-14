@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { authenticate } = require("../middlewares/auth.middleware"); // your existing JWT middleware
+const { authenticate } = require("../middlewares/protect"); // your existing JWT middleware
 
 const {
   createTask,
