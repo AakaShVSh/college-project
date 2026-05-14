@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const protect = require("../middlewares/protect"); // your existing JWT middleware
+const { authenticate } = require("../middlewares/auth.middleware"); // your existing JWT middleware
 
 const {
   createTask,
@@ -16,7 +16,7 @@ const {
 } = require("../controllers/task.controller");
 
 // ── All routes require protectentication ──────────────────────────────────────
-router.use(protect);
+router.use(authenticate); 
 
 // ── My Tasks (before /:id to avoid conflict) ───────────────────────────────
 router.get("/my", getMyTasks);
